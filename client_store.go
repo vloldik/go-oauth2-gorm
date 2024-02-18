@@ -15,8 +15,7 @@ import (
 type ClientStoreItem struct {
 	ID        string
 	Secret    string `gorm:"type:varchar(512)"`
-	Domain    string `gorm:"type:varchar(512)"`
-	Data      string `gorm:"type:text"`
+	
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
@@ -84,6 +83,10 @@ func (s *ClientStore) GetByID(ctx context.Context, id string) (oauth2.ClientInfo
 	return s.toClientInfo([]byte(item.Data))
 }
 
+func (info *oauth2.ClientInfo) MarshalJson() {
+	
+}
+ 
 func (s *ClientStore) Create(ctx context.Context, info oauth2.ClientInfo) error {
 	data, err := json.Marshal(info)
 	if err != nil {
